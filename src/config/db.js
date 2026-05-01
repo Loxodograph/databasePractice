@@ -1,13 +1,17 @@
 import pg from 'pg';
 
-import { PrismaClient } from "../generated/prisma/client.ts"; 
+import { PrismaClient } from "../generated/prisma/client.ts";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-const pool = new pg.Pool({ connectionString: process.env.DIRECT_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
- });
+const pool = new pg.Pool({
+  // connectionString: process.env.DIRECT_URL,
+  host: 'aws-1-us-east-2.pooler.supabase.com',
+  port: 5432,
+  user: 'postgres.rzgatpaffijspdfaabpe',
+  database: 'postgres',
+  password: "One3Pizzatree",
+  ssl: {rejectUnauthorized: false}
+});
 const adapter = new PrismaPg(pool);
 
 export const prisma = new PrismaClient({ adapter });
