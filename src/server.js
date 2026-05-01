@@ -4,11 +4,11 @@ config();
 import express from "express";
 import { connectDB, disconnectDB } from "./config/db.js";
 
+await connectDB();
 
 import movieRoutes from "./routes/movieRoutes.js";
 import transactionRoutes from "./routes/transactionsRoutes.js";
 
-connectDB();
 
 const app = express();
 
@@ -24,12 +24,12 @@ const PORT = 5001;
 
 const server = app.listen(PORT, () => {
   console.log(`Server Running on Port ${PORT}`);
-  console.log("DATABASE_URL =", process.env.DATABASE_URL);
+  console.log("DATABASE_URL =", process.env.DIRECT_URL);
 });
 
 process.on("unhandledRejection", (err) => {
   console.error("Unhandled Rejection:", err);
-  ServiceWorkerRegistration.close(async () => {
+  server.close(async () => {
     await disconnectDB();
     process.exit(1);
   });

@@ -1,4 +1,3 @@
-import { prisma } from "../config/db.js";
 import { getAllTransactions } from "../services/transactionService.js";
 import { createTransaction as createTransactionService } from "../services/transactionService.js";
 const getTransactions = async (req, res) => {
@@ -6,7 +5,8 @@ const getTransactions = async (req, res) => {
     const transactions = await getAllTransactions();
     res.status(200).json(transactions);
   } catch (error) {
-    res.status(500).json({ error: 'Internal Service Error' });
+    console.error(error);
+    res.status(500).json({ error: `Internal Service Error ${error.message}` });
   }
 };
 

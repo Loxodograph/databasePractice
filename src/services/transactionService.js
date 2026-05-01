@@ -10,7 +10,7 @@ async function createTransaction(transactionData) {
     data: {
       accountId: Number(transactionData.accountId),
       categoryId: Number(transactionData.categoryId),
-      amount: Number(transactionData.amount),
+      amount: String(transactionData.amount),
       date: transactionData.date ? new Date(transactionData.date) : new Date(),
       description: transactionData.description // only if it exists in schema
     }

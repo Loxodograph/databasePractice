@@ -1,12 +1,11 @@
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output = "../src/generated/prisma/"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
 }
-
 model User {
   id           Int        @id @default(autoincrement())
   email        String     @unique
@@ -19,7 +18,8 @@ model User {
 model Categories {
   id           Int            @id @default(autoincrement())
   name         String
-  type         Int
+  typeId       Int            @default(1)
+  type         Types          @relation(fields: [typeId], references: [id])
   transactions Transactions[]
 }
 
@@ -41,4 +41,10 @@ model Accounts {
   balance      Decimal        @db.Decimal(10, 2)
   user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions Transactions[]
+}
+
+model Types {
+  id         Int          @id @default(autoincrement())
+  name       String
+  categories Categories[]
 }
