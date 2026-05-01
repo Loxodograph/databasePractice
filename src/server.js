@@ -8,6 +8,7 @@ await connectDB();
 
 import movieRoutes from "./routes/movieRoutes.js";
 import transactionRoutes from "./routes/transactionsRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 
 app.use("/movies", movieRoutes);
 app.use("/transactions", transactionRoutes);
+app.use("/user", userRoutes);
 
 const PORT = 5001;
 
