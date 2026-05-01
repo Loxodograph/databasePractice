@@ -1,24 +1,30 @@
+import { config } from "dotenv";
+config();
+
 import express from "express";
-import { config } from 'dotenv';
 import { connectDB, disconnectDB } from "./config/db.js";
 
 
 import movieRoutes from "./routes/movieRoutes.js";
+import transactionRoutes from "./routes/transactionsRoutes.js";
 
-config();
 connectDB();
 
 const app = express();
+
+app.use(express.json());
 
 
 // API Routes
 
 app.use("/movies", movieRoutes);
+app.use("/transactions", transactionRoutes);
 
 const PORT = 5001;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server Running on Port ${PORT}`);
+  console.log("DATABASE_URL =", process.env.DATABASE_URL);
 });
 
 process.on("unhandledRejection", (err) => {
