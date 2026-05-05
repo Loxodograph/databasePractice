@@ -4,6 +4,14 @@ async function getAllUsers() {
   return await prisma.user.findMany();
 }
 
+async function getUserByUsername(username) {
+  return await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+}
+
 async function createUser(userData) {
 
   return await prisma.user.create({
@@ -16,4 +24,4 @@ async function createUser(userData) {
 
 }
 
-export { getAllUsers, createUser };
+export { getAllUsers, createUser, getUserByUsername };
