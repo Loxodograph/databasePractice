@@ -13,6 +13,11 @@
 <h2>List all Transactions</h2>
 <button (click)="transactionList()">List Transactions</button>
 
-<ul>
+<ul *ngFor="let transaction of transactions(); let i = index">
+  <li>
+    {{i + 1}}: {{transaction.date}} - ${{transaction.amount}} <br>
+    {{ categories()[transaction.categoryId - 1]?.name }} - {{transaction.description}}
+    <button (click)="deleteTransaction(transaction.id)">X</button>
+  </li>
  
 </ul>

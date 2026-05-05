@@ -15,7 +15,15 @@ async function createTransaction(transactionData) {
       description: transactionData.description // only if it exists in schema
     }
   });
-
 }
 
-export { getAllTransactions, createTransaction };
+async function deleteTransaction(transactionData) {
+  return prisma.transactions.delete({
+    where: {
+      id: transactionData,
+    },
+  })
+
+};
+
+export { getAllTransactions, createTransaction, deleteTransaction };

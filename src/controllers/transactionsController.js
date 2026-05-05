@@ -1,5 +1,6 @@
 import { getAllTransactions } from "../services/transactionService.js";
 import { createTransaction as createTransactionService } from "../services/transactionService.js";
+import { deleteTransaction as deleteTransactionService } from "../services/transactionService.js";
 const getTransactions = async (req, res) => {
   try {
     const transactions = await getAllTransactions();
@@ -34,4 +35,16 @@ const createTransaction = async (req, res) => {
   }
 };
 
-export { getTransactions, createTransaction };
+const deleteTransaction = async (req, res) => {
+  try {
+    console.log(req);
+    const id = Number(req.params.id);
+    await deleteTransactionService(id);
+    res.status(200).json({ message: "Deleted" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message});
+  }
+
+};
+export { getTransactions, createTransaction, deleteTransaction };
