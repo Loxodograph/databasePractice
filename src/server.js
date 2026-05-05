@@ -2,6 +2,7 @@ import { config } from "dotenv";
 config();
 
 import express from "express";
+import cors from 'cors';
 import { connectDB, disconnectDB } from "./config/db.js";
 
 await connectDB();
@@ -12,6 +13,11 @@ import userRoutes from "./routes/userRoutes.js";
 
 
 const app = express();
+
+app.use(cors({
+  origin: 'https://opulent-space-meme-4wj9xw4jg693g4-4200.app.github.dev',
+  credentials: true,
+}));
 
 app.use(express.json());
 

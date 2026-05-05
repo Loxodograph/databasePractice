@@ -3,9 +3,16 @@
 <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
   <input formControlName="amount" placeholder="Amount" />
   <input formControlName="description" placeholder="Description" />
-  <select name="category" id="categorySelect">
-    <option value="food">Food</option>
-    <option value="transportation">Transportation</option>
+  <select formControlName="categoryId" id="categorySelect">
+    <option value="1" selected>Food</option>
+    <option value="2">Transportation</option>
   </select>
   <button type="submit">Submit</button>
 </form>
+
+<h2>List all Transactions</h2>
+<button (click)="transactionList()">List Transactions</button>
+
+<ul>
+ 
+</ul>
