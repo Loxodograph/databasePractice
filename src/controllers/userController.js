@@ -6,6 +6,9 @@ const getUsers = async (req, res) => {
   try {
     if (username) {
       const userInfo = await getUserByUsername(username);
+      if (!userInfo) {
+        return res.status(404).json( {message: 'User not Found'});
+      }
       res.status(200).json(userInfo);
     } else {
       const users = await getAllUsers();
@@ -23,13 +26,13 @@ const createUser = async (req, res) => {
     const {
       email,
       username,
-      passwordHash,
+      password,
     } = req.body
 
     const newUser = await createUserService({
       email,
       username,
-      passwordHash,
+      password,
       date: new Date()
     });
 

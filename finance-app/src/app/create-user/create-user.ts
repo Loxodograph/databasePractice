@@ -3,14 +3,15 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { UserProfile } from '../services/user-profile';
 import { FormsModule } from '@angular/forms';
-import * as bcrypt from 'bcryptjs';
 import { User } from '../user';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-create-user',
   imports: [FormsModule],
   templateUrl: './create-user.html',
   styleUrl: './create-user.css',
+  standalone: true,
 })
 export class CreateUser {
   userName: string = "";
@@ -20,52 +21,43 @@ export class CreateUser {
 
   constructor(private http: HttpClient, private router: Router, public userProfile: UserProfile) { }
   onSubmit() {
+
     if (!(this.password === this.passwordConfirmation)) {
       alert("Passwords Must Match");
     } else {
-      const salt = bcrypt.genSaltSync();
-      const hashedPassword = bcrypt.hashSync(this.password);
+
       const userData = {
         email: this.emailAddress,
         username: this.userName,
-        passwordHash: hashedPassword,
-        salt: salt,
+        password: this.password,
       }
       let existingUser: string = "";
-      this.http.get<User>(`https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/user?username=${userData.username}`)
+      this.http.get<User>(`${environment.apiUrl}/user?username=${userData.username}`)
         .subscribe({
           next: (response) => {
-            existingUser = response.username;
-            console.log(existingUser);
-            if (response !== null) {
-              alert(`Username ${userData.username} already taken`);
-            } else {
-              this.http.post('https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/user', userData)
+            alert(`Username ${userData.username} already taken`);
+
+          },
+          error: (err) => {
+            if (err.status === 404) {
+              this.http.post(`${environment.apiUrl}/user`, userData)
                 .subscribe({
                   next: (response) => {
-                    console.log("Success!", response);
+                    console.log("Success!");
+                    this.userProfile.userDetails.getValue().userName = userData.username;
+                    this.userProfile.userDetails.getValue().password = userData.password;
+                    this.router.navigate(['/transactions']);
+
                   },
-                  error: (error) => console.error("Error!", error),
+                  error: (error) => console.error("Error!ahaha", error),
                 })
+            } else {
+              console.error("Unexpected error: ", err);
             }
           }
-        })
 
 
-
-      if (existingUser !== null) {
-        alert(`Username ${userData.username} already taken`);
-      } else {
-        this.http.post('https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/user', userData)
-          .subscribe({
-            next: (response) => {
-              console.log("Success!", response);
-            },
-            error: (error) => console.error("Error!", error),
-          })
-      }
-
-    };
+        });
+    }
   }
 }
-

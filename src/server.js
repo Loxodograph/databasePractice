@@ -14,10 +14,12 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 
 const app = express();
 
+const allowedOrigins = process.env.CORS_ORIGINS.split(',')
+
 //enable cors
 
 app.use(cors({
-  origin: 'https://opulent-space-meme-4wj9xw4jg693g4-4200.app.github.dev',
+  origin: allowedOrigins,
   credentials: true,
 }));
 
@@ -34,6 +36,7 @@ app.use("/categories", categoryRoutes);
 const PORT = 5001;
 
 const server = app.listen(PORT, () => {
+  console.log(allowedOrigins);
   console.log(`Server Running on Port ${PORT}`);
   console.log("DATABASE_URL =", process.env.DIRECT_URL);
 });

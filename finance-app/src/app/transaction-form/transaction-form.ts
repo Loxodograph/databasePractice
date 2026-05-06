@@ -2,6 +2,7 @@ import { Component, signal, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgFor } from '@angular/common';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-transaction-form',
   imports: [ReactiveFormsModule, NgFor],
@@ -27,10 +28,7 @@ export class TransactionForm implements OnInit {
         ...this.transactionForm.value,
         accountId: 1
       };
-      // console.log(JSON.stringify(formData));
-      // console.log(this.transactionForm.value);
-
-      this.http.post('https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/transactions', formData)
+      this.http.post(`${environment.apiUrl}/transactions`, formData)
         .subscribe({
           next: (response) => {
             console.log("Success!", response);
@@ -43,7 +41,7 @@ export class TransactionForm implements OnInit {
   }
 
   transactionList() {
-    this.http.get<any[]>('https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/transactions')
+    this.http.get<any[]>(`${environment.apiUrl}/transactions`)
       .subscribe((response) => {
         const formatted = response.map(t => ({
           ...t,
@@ -57,14 +55,14 @@ export class TransactionForm implements OnInit {
   }
 
   translateCategoryId() {
-    this.http.get<any[]>(`https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/categories`)
+    this.http.get<any[]>(`${environment.apiUrl}/categories`)
       .subscribe((response) => {
         this.categories.set(response);
       });
   }
 
   deleteTransaction(id: number) {
-    this.http.delete(`https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/transactions/${id}`)
+    this.http.delete(`${environment.apiUrl}/transactions/${id}`)
       .subscribe({
         next: (response) => {
           console.log(response);
