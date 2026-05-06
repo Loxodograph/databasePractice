@@ -6,8 +6,8 @@ import { UserProfile } from './user-profile';
 export class AuthGuardService implements CanActivate {
   constructor(public auth: Auth, public router: Router, private userProfile: UserProfile) {}
   canActivate(): boolean {
-    const username:string = this.userProfile.getValue().userName;
-    if (!this.auth.isAuthenticated(username, UserProfile.hashedPassword)) {
+    const username:string = this.userProfile.userDetails.getValue().userName;
+    if (!this.auth.isAuthenticated(username, this.userProfile.userDetails.getValue().hashedPassword)) {
       this.router.navigate(['login']);
       return false;
     }
