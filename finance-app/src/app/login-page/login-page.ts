@@ -28,3 +28,5 @@ export class LoginPage {
     }
   
  }
+
+ // still need to implement log in ideas

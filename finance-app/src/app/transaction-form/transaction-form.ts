@@ -22,11 +22,13 @@ export class TransactionForm implements OnInit {
     });
   }
 
+  //need to only print transactions associated with particular account id
+
   onSubmit() {
     if (this.transactionForm.valid) {
       const formData = {
         ...this.transactionForm.value,
-        accountId: 1
+        accountId: 1 // fix this
       };
       this.http.post(`${environment.apiUrl}/transactions`, formData)
         .subscribe({

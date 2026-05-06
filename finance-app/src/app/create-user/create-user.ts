@@ -46,7 +46,7 @@ export class CreateUser {
                     console.log("Success!");
                     this.userProfile.userDetails.getValue().userName = userData.username;
                     this.userProfile.userDetails.getValue().password = userData.password;
-                    this.router.navigate(['/transactions']);
+                    this.router.navigate(['/transactions']); // maybe go to an account chooser page that allows to create account
 
                   },
                   error: (error) => console.error("Error!ahaha", error),
