@@ -2,7 +2,7 @@ import { getAllUsers, getUserByUsername } from "../services/userService.js";
 import { createUser as createUserService } from "../services/userService.js";
 
 const getUsers = async (req, res) => {
-  const username = req.query;
+  const username = req.query.username;
   try {
     if (username) {
       const userInfo = await getUserByUsername(username);

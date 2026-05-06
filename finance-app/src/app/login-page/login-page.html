@@ -1,2 +1,11 @@
 <p>login-page works!</p>
 <h1>LOGIN</h1>
+
+<p>Hello, {{ userName }}</p>
+<p>If you are a new user, please sign up</p>
+  <label>Username </label><br>
+  <input [(ngModel)]="userName" type="text"><br>
+  <label>Password </label><br>
+  <input [(ngModel)]="password" type="password"><br>
+  <button (click)="onSubmit()" type="submit">Submit</button>
+  <button (click)="goToSignUp()">Sign Up</button>

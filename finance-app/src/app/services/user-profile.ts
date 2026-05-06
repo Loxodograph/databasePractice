@@ -10,6 +10,7 @@ export class UserProfile {
     loggedIn: false,
     accountNumber: 0,
     hashedPassword: '',
+    salt: '',
   });
 
 }

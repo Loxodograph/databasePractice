@@ -27,8 +27,8 @@ export class TransactionForm implements OnInit {
         ...this.transactionForm.value,
         accountId: 1
       };
-      console.log(JSON.stringify(formData));
-      console.log(this.transactionForm.value);
+      // console.log(JSON.stringify(formData));
+      // console.log(this.transactionForm.value);
 
       this.http.post('https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/transactions', formData)
         .subscribe({

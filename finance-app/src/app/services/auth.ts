@@ -13,6 +13,7 @@ export class Auth {
     const params = new HttpParams().set('username', username);
     const userData: any = this.http.get('https://opulent-space-meme-4wj9xw4jg693g4-5001.app.github.dev/user', {params});
     const comparisonPassword = userData.passwordHash;
-    return bcrypt.compareSync(hashedPassword, comparisonPassword);
+    return false;
+    // return bcrypt.compareSync(hashedPassword, comparisonPassword);
   }
 }

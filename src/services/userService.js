@@ -16,9 +16,10 @@ async function createUser(userData) {
 
   return await prisma.user.create({
     data: {
-      email: String(transactionData.email),
-      username: String(transactionData.username),
-      passwordHash: String(transactionData.passwordHash),
+      email: String(userData.email),
+      username: String(userData.username),
+      passwordHash: String(userData.passwordHash),
+      salt: String(userData.salt),
     }
   });
 

@@ -1,0 +1,9 @@
+<label for="email">Email</label><br>
+<input type="email" [(ngModel)]="emailAddress" required><br>
+<label>Username </label><br>
+<input [(ngModel)]="userName" type="text" required><br>
+<label>Password </label><br>
+<input [(ngModel)]="password" type="password" required><br>
+<label>Confirm Password </label><br>
+<input [(ngModel)]="passwordConfirmation" type="password" required><br>
+<button (click)="onSubmit()" type="submit">Submit</button>
