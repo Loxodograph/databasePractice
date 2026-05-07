@@ -41,8 +41,10 @@ export class CreateUser {
     this.http.get<User>(`${environment.apiUrl}/user?username=${username}`)
       .subscribe({
         next: (response) => {
-
+          // Copy from below, username already taken
         }
+        //create error
+        // create function that creates user
       })
   }
 
