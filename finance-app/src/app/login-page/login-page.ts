@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { Auth } from '../services/auth';
+import { AuthService } from '../services/auth';
 import { FormsModule } from '@angular/forms';
 import { UserProfile } from '../services/user-profile';
 
@@ -12,21 +12,32 @@ import { UserProfile } from '../services/user-profile';
   styleUrl: './login-page.css',
 })
 export class LoginPage {
-    userName: string = "";
-    password: string= "";
+  userName: string = "";
+  password: string = "";
 
-    constructor(private router: Router, public userProfile: UserProfile) {}
-    
-    onSubmit() {
-      this.userProfile.userDetails.getValue().userName = this.userName;
-      this.userProfile.userDetails.getValue().passwordHash
-      this.router.navigate(["/transactions"]);
-    }
+  constructor(private router: Router, public userProfile: UserProfile, public authService: AuthService) { }
 
-    goToSignUp() {
-      this.router.navigate(['/signUp']);
-    }
-  
- }
+  onSubmit() {
+    const credentials = { username: this.userName, password: this.password };
 
- // still need to implement log in ideas
+    this.authService.login(credentials).subscribe({
+      next: (response) => {
+        // 1. Save the token for the interceptor to use later
+        localStorage.setItem('token', response.token);
+
+        // 2. Redirect to your protected route
+        this.router.navigate(['/transactions']);
+      },
+      error: (err) => {
+        alert("Login failed: Invalid username or password");
+      }
+    });
+  }
+
+  goToSignUp() {
+    this.router.navigate(['/signUp']);
+  }
+
+}
+
+// still need to implement log in ideas

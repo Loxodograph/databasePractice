@@ -1,17 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpParams } from '@angular/common/http';
-import * as bcrypt from 'bcryptjs';
 import { environment } from '../../environments/environment';
-import { User } from '../user';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class Auth {
-  constructor(private http: HttpClient) { }
-  
-  public isAuthenticated(comparisonPassword: string, hashedPassword: string): boolean {
-    return bcrypt.compareSync(comparisonPassword, hashedPassword);
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private http = inject(HttpClient);
+
+  login(credentials: { username: string; password: string }) {
+    // We use POST to keep credentials out of the URL
+    return this.http.post<{ token: string }>(`${environment.apiUrl}/login`, credentials);
   }
 }

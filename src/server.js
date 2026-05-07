@@ -32,6 +32,19 @@ app.use("/movies", movieRoutes);
 app.use("/transactions", transactionRoutes);
 app.use("/user", userRoutes);
 app.use("/categories", categoryRoutes);
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+  
+  // Use Prisma to find the user and Bcrypt to check the password
+  const user = await prisma.user.findUnique({ where: { username } });
+  if (user && await bcrypt.compare(password, user.passwordHash)) {
+    // Generate a signed token
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token });
+  } else {
+    res.status(401).send("Unauthorized");
+  }
+});
 
 const PORT = 5001;
 

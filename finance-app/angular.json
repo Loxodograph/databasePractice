@@ -67,8 +67,8 @@
             "development": {
               "buildTarget": "finance-app:build:development"
             }
-          },
-          "defaultConfiguration": "development"
+          }
+          
         },
         "test": {
           "builder": "@angular/build:unit-test"
