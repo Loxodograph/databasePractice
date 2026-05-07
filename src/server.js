@@ -11,6 +11,7 @@ import movieRoutes from "./routes/movieRoutes.js";
 import transactionRoutes from "./routes/transactionsRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -32,26 +33,13 @@ app.use("/movies", movieRoutes);
 app.use("/transactions", transactionRoutes);
 app.use("/user", userRoutes);
 app.use("/categories", categoryRoutes);
-app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
-  
-  // Use Prisma to find the user and Bcrypt to check the password
-  const user = await prisma.user.findUnique({ where: { username } });
-  if (user && await bcrypt.compare(password, user.passwordHash)) {
-    // Generate a signed token
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
-  } else {
-    res.status(401).send("Unauthorized");
-  }
-});
+app.use("/login", authRoutes);
+
 
 const PORT = 5001;
 
 const server = app.listen(PORT, () => {
-  console.log(allowedOrigins);
   console.log(`Server Running on Port ${PORT}`);
-  console.log("DATABASE_URL =", process.env.DIRECT_URL);
 });
 
 process.on("unhandledRejection", (err) => {
