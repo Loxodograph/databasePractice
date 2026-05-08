@@ -12,6 +12,7 @@ import transactionRoutes from "./routes/transactionsRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import accountRoutes from './routes/accountRoutes.js';
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/transactions", transactionRoutes);
 app.use("/user", userRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/login", authRoutes);
+app.use("/accounts", accountRoutes);
 
 
 const PORT = 5001;

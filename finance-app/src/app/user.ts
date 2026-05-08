@@ -4,5 +4,11 @@ export interface User {
   email: string;
   passwordHash: string;
   createdAt: Date;
-  salt: string;
+}
+
+export interface Account {
+  id: number,
+  userId: number,
+  accountType: string,
+  balance: number,
 }

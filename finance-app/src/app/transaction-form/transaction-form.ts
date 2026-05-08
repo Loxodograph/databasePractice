@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgFor } from '@angular/common';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { UserProfile } from '../services/user-profile';
 @Component({
   selector: 'app-transaction-form',
   imports: [ReactiveFormsModule, NgFor],
@@ -14,7 +15,7 @@ export class TransactionForm implements OnInit {
   public transactions = signal<any[]>([]);
   public categories = signal<any[]>([]);
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder, public userProfile: UserProfile) {
     this.transactionForm = this.fb.group({
       amount: [''],
       description: [''],
@@ -28,7 +29,7 @@ export class TransactionForm implements OnInit {
     if (this.transactionForm.valid) {
       const formData = {
         ...this.transactionForm.value,
-        accountId: 1 // fix this
+        accountId: this.userProfile.userDetails.getValue().accountId, // fix this
       };
       this.http.post(`${environment.apiUrl}/transactions`, formData)
         .subscribe({

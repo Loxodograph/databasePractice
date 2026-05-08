@@ -1,1 +1,16 @@
 <p>account-chooser works!</p>
+<ul *ngFor="let account of accounts(); let i = index">
+  <li>
+    {{i + 1}}: {{account.type}} - ${{account.balance}} <br>  
+    <button (click)="selectAccount(account.id)">Choose Account</button>
+  </li>
+ 
+</ul>
+
+<h1> Create Account</h1>
+
+<form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+  <input formControlName="type" placeholder="Account Name" />
+  <input formControlName="balance" placeholder="Balance" />
+  <button type="submit">Submit</button>
+</form>
